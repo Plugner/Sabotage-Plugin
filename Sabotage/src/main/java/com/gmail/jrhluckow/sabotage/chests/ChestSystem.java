@@ -18,7 +18,7 @@ public class ChestSystem {
     }
     public static List<ItemStack> CHEST_ITEMS = new ArrayList<>();
     public static void registerItems() {
-      for(String s: config.getStringList("chest_items")) {
+      for(String s: config.getStringList("chest_itens")) {
           String[] item_string = s.split(":");
           String item_name = item_string[1];
           int amount = Integer.parseInt(item_string[0]);

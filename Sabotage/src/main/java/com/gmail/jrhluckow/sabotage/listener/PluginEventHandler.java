@@ -30,6 +30,8 @@ public class PluginEventHandler implements Listener {
                 event.getPlayer().getInventory().addItem(ChestSystem.randomItem());
             }
         }
+        event.setCancelled(false);
+        return;
 
     }
 

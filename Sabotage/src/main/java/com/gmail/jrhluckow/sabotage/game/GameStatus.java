@@ -38,15 +38,15 @@ public class GameStatus {
 
     Bukkit.getOnlinePlayers().forEach(player -> {
       if(saboteurs.get() != 0) {
-        player.sendMessage(TranslatableContent.translateContent("GAME_INTRO_TEAM_INNOCENT"));
+        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_INNOCENT"));
         saboteurs.getAndDecrement();
         Team.SABOTEURS.add(player);
       }else if(detectives.get() != 0) {
-        player.sendMessage(TranslatableContent.translateContent("GAME_INTRO_TEAM_DETECTIVE"));
+        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_DETECTIVE"));
         detectives.getAndDecrement();
         Team.DETECTIVES.add(player);
       }else{
-        player.sendMessage(TranslatableContent.translateContent("GAME_INTRO_TEAM_SABOTEUR"));
+        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_SABOTEUR"));
         Team.INNOCENTS.add(player);
       }
     });
@@ -69,13 +69,17 @@ public class GameStatus {
   public static boolean isRunning() {
     return RUNNING;
   }
+
   public static int secondsToStart = 100;
   public static void startDelay() {
 
     RUNNING = false;
-    Bukkit.getScheduler().runTaskTimer(main, new BukkitRunnable() {
+    Bukkit.getScheduler().runTaskTimer(main, new Runnable() {
       @Override
       public void run() {
+        if(isRunning()) {
+          return;
+        }
         if(secondsToStart == 0) {
           if(Bukkit.getOnlinePlayers().size() <= config.getInt("config.MIN_PLAYER_TO_START")) {
             Bukkit.broadcastMessage(TranslatableContent.translateContent("messages.LOWER_THAN_MIN_PLAYER_COUNT"));
@@ -86,7 +90,7 @@ public class GameStatus {
 
         }else{
           Bukkit.getOnlinePlayers().forEach(player -> {
-            player.sendTitle(TranslatableContent.translateContent("messages.TITLE_STARTING").replace("?", ""+secondsToStart), TranslatableContent.translateContent("message.SUBTITLE_STARTING").replace("?", "" + secondsToStart), 10, 10, 10 );
+            player.sendTitle(TranslatableContent.translateContent("messages.TITLE_STARTING").replace("?", ""+secondsToStart), TranslatableContent.translateContent("messages.SUBTITLE_STARTING").replace("?", "" + secondsToStart), 10, 10, 10 );
           });
           secondsToStart = secondsToStart - 1;
         }
