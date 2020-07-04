@@ -21,3 +21,4 @@ chest_itens:
  - '1:STONE'
  - '2:DIRT'
 maps:
+ - 'world'
