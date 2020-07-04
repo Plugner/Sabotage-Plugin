@@ -15,7 +15,7 @@ public class TranslatableContent {
     }
     public static String translateContent( String content) {
       if(config.contains(content.replace("%", ""))) {
-          return config.getString(content.replace("%", "").replace('&', ChatColor.COLOR_CHAR));
+          return ChatColor.translateAlternateColorCodes('&',config.getString(content.replace("%", "")));
       }else{
           return "";
       }

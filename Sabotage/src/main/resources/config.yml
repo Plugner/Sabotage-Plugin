@@ -3,21 +3,22 @@
 # Inspiration: McPvP and Gamemods.
 config:
  # MIN = 6
- MIN_PLAYER_TO_START: 6
+ MIN_PLAYER_TO_START: 1
  SPAWN_WORLD: 'world'
 messages:
- JOIN_MESSAGE: 'Welcome to Sabotage!'
- FORCE_START: 'The game has been forced to start'
- FORCE_END: 'The game has been forced to end'
- GAME_ENDED: 'The game has ended!\nSaboteurs: '
- TITLE_STARTING: 'Sabotage'
- SUBTITLE_STARTING: 'Starting in ? seconds.'
- LOWER_THAN_MIN_PLAYER_COUNT: 'The Game was cancelled because does not have the minimum count of players.'
+ JOIN_MESSAGE: '&2Welcome to Sabotage!'
+ FORCE_START: '&3The game has been forced to start'
+ FORCE_END: '&4The game has been forced to end'
+ GAME_ENDED: '&cThe game has ended! Saboteurs: '
+ TITLE_STARTING: '&9Sabotage'
+ SUBTITLE_STARTING: '&6Starting in &9? &6seconds.'
+ LOWER_THAN_MIN_PLAYER_COUNT: '&c&lThe Game was cancelled because does not have the minimum count of players.'
  PLAYER_DIE: 'You died.'
- GAME_INTRO_TEAM_INNOCENT: '&aYou are a &oInnocent &r&ain this game.'
- GAME_INTRO_TEAM_DETECTIVE: '&9You are a &oDetective &r&9in this game.'
- GAME_INTRO_TEAM_SABOTEUR: '&cYou are a &oSaboteur &r&cin this game.'
+ GAME_INTRO_TEAM_INNOCENT: '&aYou are a &n&lInnocent&r &ain this game.'
+ GAME_INTRO_TEAM_DETECTIVE: '&9You are a &n&lDetective&r &9in this game.'
+ GAME_INTRO_TEAM_SABOTEUR: '&cYou are a &n&lSaboteur&r &cin this game.'
 chest_itens:
+ # 'amount:name' example: '1:WOODEN_SWORD'
  - '1:STONE'
  - '2:DIRT'
 maps:

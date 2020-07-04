@@ -46,7 +46,7 @@ public final class Sabotage extends JavaPlugin {
          }
         });
 
-        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2&lSabotage- &cPlugin started.\n&2&lSabotage- &aMaps Loaded Successfully: " + MAP_LOAD_SUCESS.get() + "\n&2&lSabotage- &cMaps with Errors: " + MAP_LOAD_ERROR.get() + "&c(" +MAPS_WITH_ERRORS.toString()+ ")"));
+        console.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2&lSabotage- &cPlugin started.\n&2&lSabotage- &aMaps Loaded Successfully: " + MAP_LOAD_SUCESS.get() + "\n&2&lSabotage- &cMaps with Errors: " + MAP_LOAD_ERROR.get() + "&c(" +MAPS_WITH_ERRORS.toString().replace("[]","")+ ")"));
         GameStatus.startDelay();
 
 

@@ -38,7 +38,7 @@ public class GameStatus {
 
     Bukkit.getOnlinePlayers().forEach(player -> {
       if(saboteurs.get() != 0) {
-        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_INNOCENT"));
+        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_SABOTEUR"));
         saboteurs.getAndDecrement();
         Team.SABOTEURS.add(player);
       }else if(detectives.get() != 0) {
@@ -46,7 +46,7 @@ public class GameStatus {
         detectives.getAndDecrement();
         Team.DETECTIVES.add(player);
       }else{
-        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_SABOTEUR"));
+        player.sendMessage(TranslatableContent.translateContent("messages.GAME_INTRO_TEAM_INNOCENT"));
         Team.INNOCENTS.add(player);
       }
     });
@@ -58,10 +58,14 @@ public class GameStatus {
   }
   public static void endGame() {
     RUNNING = false;
-
+    secondsToStart = 100;
     Bukkit.getOnlinePlayers().forEach(player -> {
       player.damage(20.0);
-      player.sendMessage(TranslatableContent.translateContent("messages.GAME_ENDED") + Team.SABOTEURS.toArray().toString());
+      final String[] saboteurs = {""};
+      Team.SABOTEURS.forEach(sab -> {
+       saboteurs[0] = saboteurs[0] + " " + sab.getName();
+      });
+      player.sendMessage(TranslatableContent.translateContent("messages.GAME_ENDED") + saboteurs[0]);
     });
     Team.clearTeams();
     alivePlayers.clear();
