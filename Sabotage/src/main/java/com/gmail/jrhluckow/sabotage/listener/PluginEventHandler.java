@@ -3,10 +3,7 @@ package com.gmail.jrhluckow.sabotage.listener;
 import com.gmail.jrhluckow.sabotage.chests.ChestSystem;
 import com.gmail.jrhluckow.sabotage.game.GameStatus;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.Objects;
 
 public class PluginEventHandler implements Listener {
     @EventHandler
@@ -40,13 +39,15 @@ public class PluginEventHandler implements Listener {
         event.setDeathMessage(null);
         if(GameStatus.isRunning()) {
           GameStatus.alivePlayers.remove(p);
+          p.sendMessage(TranslatableContent.translateContent("messages.PLAYER_DIE"));
+          p.setGameMode(GameMode.SPECTATOR);
           if(GameStatus.alivePlayers.size() == 0) {
-              p.sendMessage(TranslatableContent.translateContent("messages.PLAYER_DIE"));
-              p.setGameMode(GameMode.SPECTATOR);
-              Bukkit.getOnlinePlayers().forEach(player -> {p.setGameMode(GameMode.SURVIVAL);});
+
+              Bukkit.getOnlinePlayers().forEach(player -> {p.setGameMode(GameMode.SURVIVAL);player.teleport(new Location(Bukkit.getWorld(Objects.requireNonNull(GameStatus.config.getString("config.SPAWN_WORLD"))),0,0,0));});
               GameStatus.endGame();
           }
 
         }
     }
+
 }

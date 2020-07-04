@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameStatus {
   public static FileConfiguration config;
@@ -29,6 +30,27 @@ public class GameStatus {
     startDelay();
   }
   public static void forceStartGame() {
+    int min = config.getInt("config.MIN_PLAYER_TO_START");
+    int players = Bukkit.getOnlinePlayers().size();
+
+    AtomicInteger saboteurs = new AtomicInteger((2) * (players / min));
+    AtomicInteger detectives = new AtomicInteger((1) * (players / min));
+
+    Bukkit.getOnlinePlayers().forEach(player -> {
+      if(saboteurs.get() != 0) {
+        player.sendMessage(TranslatableContent.translateContent("GAME_INTRO_TEAM_INNOCENT"));
+        saboteurs.getAndDecrement();
+        Team.SABOTEURS.add(player);
+      }else if(detectives.get() != 0) {
+        player.sendMessage(TranslatableContent.translateContent("GAME_INTRO_TEAM_DETECTIVE"));
+        detectives.getAndDecrement();
+        Team.DETECTIVES.add(player);
+      }else{
+        player.sendMessage(TranslatableContent.translateContent("GAME_INTRO_TEAM_SABOTEUR"));
+        Team.INNOCENTS.add(player);
+      }
+    });
+
     RUNNING = true;
     Bukkit.getOnlinePlayers().forEach(player -> {
       alivePlayers.add(player);

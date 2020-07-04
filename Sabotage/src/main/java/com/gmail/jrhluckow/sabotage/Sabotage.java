@@ -1,6 +1,8 @@
 package com.gmail.jrhluckow.sabotage;
 
 import com.gmail.jrhluckow.sabotage.chests.ChestSystem;
+import com.gmail.jrhluckow.sabotage.commands.End;
+import com.gmail.jrhluckow.sabotage.commands.Start;
 import com.gmail.jrhluckow.sabotage.game.Team;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
 import com.gmail.jrhluckow.sabotage.worlds.WorldManager;
@@ -18,6 +20,8 @@ public final class Sabotage extends JavaPlugin {
     ConsoleCommandSender console = Bukkit.getConsoleSender();
     @Override
     public void onEnable() {
+        this.getCommand("start").setExecutor(new Start());
+        this.getCommand("end").setExecutor(new End());
         saveDefaultConfig();
 
         TranslatableContent translatableContent = new TranslatableContent(this);

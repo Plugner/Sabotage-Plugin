@@ -2,8 +2,9 @@
 # All credits to Plugner
 # Inspiration: McPvP and Gamemods.
 config:
- # MIN = 3
- MIN_PLAYER_TO_START: 3
+ # MIN = 6
+ MIN_PLAYER_TO_START: 6
+ SPAWN_WORLD: 'world'
 messages:
  JOIN_MESSAGE: 'Welcome to Sabotage!'
  FORCE_START: 'The game has been forced to start'
@@ -13,6 +14,9 @@ messages:
  SUBTITLE_STARTING: 'Starting in ? seconds.'
  LOWER_THAN_MIN_PLAYER_COUNT: 'The Game was cancelled because does not have the minimum count of players.'
  PLAYER_DIE: 'You died.'
+ GAME_INTRO_TEAM_INNOCENT: '&aYou are a &oInnocent &r&ain this game.'
+ GAME_INTRO_TEAM_DETECTIVE: '&9You are a &oDetective &r&9in this game.'
+ GAME_INTRO_TEAM_SABOTEUR: '&cYou are a &oSaboteur &r&cin this game.'
 chest_itens:
  - '1:STONE'
  - '2:DIRT'
