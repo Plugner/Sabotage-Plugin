@@ -3,7 +3,9 @@
 # Inspiration: McPvP and Gamemods.
 messages:
  JOIN_MESSAGE: 'Welcome to Sabotage!'
+ FORCE_START: 'The game has been forced to start'
+ FORCE_END: 'The game has been forced to end'
 chest_itens:
- - '1-STONE'
- - '2-DIRT'
+ - '1:STONE'
+ - '2:DIRT'
 maps:

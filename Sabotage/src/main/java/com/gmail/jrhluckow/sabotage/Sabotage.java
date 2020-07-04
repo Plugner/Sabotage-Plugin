@@ -1,5 +1,6 @@
 package com.gmail.jrhluckow.sabotage;
 
+import com.gmail.jrhluckow.sabotage.chests.ChestSystem;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
 import com.gmail.jrhluckow.sabotage.worlds.WorldManager;
 import org.bukkit.Bukkit;
@@ -17,7 +18,11 @@ public final class Sabotage extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        new TranslatableContent(this);
+
+        TranslatableContent translatableContent = new TranslatableContent(this);
+        ChestSystem chestSystem = new ChestSystem(this);
+        ChestSystem.registerItems();
+
         AtomicInteger MAP_LOAD_SUCESS= new AtomicInteger();
         AtomicInteger MAP_LOAD_ERROR= new AtomicInteger();
         List<String> MAPS_WITH_ERRORS= new ArrayList<>();
