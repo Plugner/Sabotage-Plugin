@@ -3,8 +3,10 @@ package com.gmail.jrhluckow.sabotage;
 import com.gmail.jrhluckow.sabotage.chests.ChestSystem;
 import com.gmail.jrhluckow.sabotage.commands.End;
 import com.gmail.jrhluckow.sabotage.commands.Start;
+import com.gmail.jrhluckow.sabotage.game.GameStatus;
 import com.gmail.jrhluckow.sabotage.game.Team;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
+import com.gmail.jrhluckow.sabotage.listener.PluginEventHandler;
 import com.gmail.jrhluckow.sabotage.worlds.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,8 +22,10 @@ public final class Sabotage extends JavaPlugin {
     ConsoleCommandSender console = Bukkit.getConsoleSender();
     @Override
     public void onEnable() {
+        GameStatus gameStatus = new GameStatus(this);
         this.getCommand("start").setExecutor(new Start());
         this.getCommand("end").setExecutor(new End());
+        this.getServer().getPluginManager().registerEvents(new PluginEventHandler(),this);
         saveDefaultConfig();
 
         TranslatableContent translatableContent = new TranslatableContent(this);
