@@ -1,0 +1,6 @@
+name: Sabotage
+version: ${project.version}
+main: com.gmail.jrhluckow.sabotage.Sabotage
+api-version: 1.15
+authors: [Plugner]
+website: github.com/Plugner
