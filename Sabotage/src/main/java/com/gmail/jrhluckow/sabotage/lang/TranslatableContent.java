@@ -2,7 +2,7 @@ package com.gmail.jrhluckow.sabotage.lang;
 
 import com.gmail.jrhluckow.sabotage.Sabotage;
 import com.gmail.jrhluckow.sabotage.exceptions.MessageNotFoundException;
-import com.sun.istack.internal.NotNull;
+
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -13,14 +13,14 @@ public class TranslatableContent {
      this.config = main.getConfig();
      this.main = main;
     }
-    public static String translateContent(@NotNull String content) {
+    public static String translateContent( String content) {
       if(config.contains(content.replace("%", ""))) {
           return config.getString(content.replace("%", "").replace('&', ChatColor.COLOR_CHAR));
       }else{
           return "";
       }
     }
-    public static String translateContentThrows(@NotNull String content) throws MessageNotFoundException {
+    public static String translateContentThrows( String content) throws MessageNotFoundException {
         if(config.contains(content.replace("%", ""))) {
             return config.getString(content.replace("%", ""));
         }else{
