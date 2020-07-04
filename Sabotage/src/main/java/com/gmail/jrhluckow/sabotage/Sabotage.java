@@ -1,6 +1,7 @@
 package com.gmail.jrhluckow.sabotage;
 
 import com.gmail.jrhluckow.sabotage.chests.ChestSystem;
+import com.gmail.jrhluckow.sabotage.game.Team;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
 import com.gmail.jrhluckow.sabotage.worlds.WorldManager;
 import org.bukkit.Bukkit;
@@ -45,6 +46,6 @@ public final class Sabotage extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        Team.clearTeams();
     }
 }
