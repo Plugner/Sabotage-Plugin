@@ -1,0 +1,9 @@
+# Sabotage Plugin
+# All credits to Plugner
+# Inspiration: McPvP and Gamemods.
+messages:
+ JOIN_MESSAGE: 'Welcome to Sabotage!'
+chest_itens:
+ - '1-STONE'
+ - '2-DIRT'
+maps:
