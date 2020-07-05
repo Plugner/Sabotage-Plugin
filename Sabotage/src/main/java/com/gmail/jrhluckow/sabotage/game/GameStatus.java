@@ -2,16 +2,21 @@ package com.gmail.jrhluckow.sabotage.game;
 
 import com.gmail.jrhluckow.sabotage.Sabotage;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameStatus {
@@ -58,17 +63,21 @@ public class GameStatus {
     Bukkit.getOnlinePlayers().forEach(player -> {
       alivePlayers.add(player);
     });
+    handleStart();
   }
   public static void endGame() {
     RUNNING = false;
     secondsToStart = 100;
     Bukkit.getOnlinePlayers().forEach(player -> {
-      player.damage(20.0);
+
       final String[] saboteurs = {""};
       Team.SABOTEURS.forEach(sab -> {
        saboteurs[0] = saboteurs[0] + " " + sab.getName();
       });
       player.sendMessage(TranslatableContent.translateContent("messages.GAME_ENDED") + saboteurs[0]);
+      player.teleport(new Location(Bukkit.getWorld("world"), 0 , 0, 0));
+      Sabotage.getMultiverseCore().deleteWorld(runningGame.getName());
+      runningGame = null;
     });
     Team.clearTeams();
     alivePlayers.clear();
@@ -108,4 +117,51 @@ public class GameStatus {
       }
     },20,20);
   }
+
+  public static MultiverseWorld runningGame = null;
+  private static void handleStart() {
+
+    MultiverseWorld arena = Sabotage.randomWorld();
+    String newName = arena.getName() + "inGame";
+
+    Sabotage.getMultiverseCore().cloneWorld(arena.getName(), newName, "normal");
+    MultiverseWorld arena_world = Sabotage.getMultiverseCore().getMVWorldManager().getMVWorld(newName);
+    Location loc = arena_world.getSpawnLocation();
+    runningGame = arena_world;
+
+    Bukkit.getOnlinePlayers().forEach(player -> {
+      player.sendMessage(TranslatableContent.translateContent("messages.LOAD_MAP").replace("$mapname$", arena.getName()));
+      String role = "";
+      int alive = alivePlayers.size();
+      if(Team.SABOTEURS.contains(player)) {
+        role = TranslatableContent.translateContent("config.ROLE_SABOTEUR");
+      }else if(Team.DETECTIVES.contains(player)) {
+        role = TranslatableContent.translateContent("config.ROLE_DETECTIVE");
+      }else{
+        role = TranslatableContent.translateContent("config.ROLE_INNOCENT");
+      }
+
+      List<String> data = new ArrayList<>();
+      data.add(player.getName());
+      data.add(role);
+      data.add(alive + "");
+
+      player.teleport(loc);
+      taskActionBarIG(data);
+    });
+  }
+  private static void taskActionBarIG(List<String> data) {
+    Player p = Bukkit.getPlayer(data.get(0));
+    String role = data.get(1);
+    int alive = Integer.parseInt(data.get(2));
+    String inGameActionBar = TranslatableContent.translateContent("messages.INGAME_ACTIONBAR").replace("$role$", role).replace("$alive$", alive + "");
+    Bukkit.getScheduler().runTaskTimer(main, () -> {
+       if(!isRunning()) {
+         return;
+       }else{
+         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(inGameActionBar));
+       }
+    },40,40);
+  }
+
 }

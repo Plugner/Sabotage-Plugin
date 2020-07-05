@@ -5,5 +5,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.multiverse:multiverse-core:0.7.0" level="project" />
   </component>
 </module>

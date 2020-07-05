@@ -4,6 +4,7 @@ main: com.gmail.jrhluckow.sabotage.Sabotage
 api-version: 1.15
 authors: [Plugner]
 website: github.com/Plugner
+depend: [Multiverse-Core]
 commands:
   start:
   end:

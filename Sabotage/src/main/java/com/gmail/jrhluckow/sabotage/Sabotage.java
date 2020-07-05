@@ -8,20 +8,42 @@ import com.gmail.jrhluckow.sabotage.game.Team;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
 import com.gmail.jrhluckow.sabotage.listener.PluginEventHandler;
 import com.gmail.jrhluckow.sabotage.worlds.WorldManager;
+import com.onarandombox.MultiverseCore.MVWorld;
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.MultiverseCore.api.MVPlugin;
+import com.onarandombox.MultiverseCore.api.MVWorldManager;
+import com.onarandombox.MultiverseCore.api.MultiversePlugin;
+import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Sabotage extends JavaPlugin {
+    public static MultiverseCore l = getMultiverseCore();
+
+    public static MVWorldManager wm = l.getMVWorldManager();
     ConsoleCommandSender console = Bukkit.getConsoleSender();
+    public static ArrayList<MultiverseWorld> loadedWorlds = new ArrayList<>();
+    public static MultiverseCore getMultiverseCore() {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
+
+        if (plugin instanceof MultiverseCore) {
+            return (MultiverseCore) plugin;
+        }
+
+        throw new RuntimeException("MultiVerse not found!");
+    }
     @Override
     public void onEnable() {
+
         GameStatus gameStatus = new GameStatus(this);
         this.getCommand("start").setExecutor(new Start());
         this.getCommand("end").setExecutor(new End());
@@ -31,7 +53,7 @@ public final class Sabotage extends JavaPlugin {
         TranslatableContent translatableContent = new TranslatableContent(this);
         ChestSystem chestSystem = new ChestSystem(this);
         ChestSystem.registerItems();
-
+        
         AtomicInteger MAP_LOAD_SUCESS= new AtomicInteger();
         AtomicInteger MAP_LOAD_ERROR= new AtomicInteger();
         List<String> MAPS_WITH_ERRORS= new ArrayList<>();
@@ -41,7 +63,8 @@ public final class Sabotage extends JavaPlugin {
              MAP_LOAD_ERROR.getAndIncrement();
              MAPS_WITH_ERRORS.add((String)map);
          }else{
-             WorldManager.loadWorld((String)map);
+             wm.loadWorld((String)map);
+             loadedWorlds.add(wm.getMVWorld((String)map));
              MAP_LOAD_SUCESS.getAndIncrement();
          }
         });
@@ -56,5 +79,11 @@ public final class Sabotage extends JavaPlugin {
     public void onDisable() {
         GameStatus.endGame();
         Team.clearTeams();
+    }
+
+    public static MultiverseWorld randomWorld() {
+        Random r = new Random();
+        int num_random = r.nextInt(loadedWorlds.size());
+        return loadedWorlds.get(num_random);
     }
 }

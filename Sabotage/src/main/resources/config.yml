@@ -5,6 +5,9 @@ config:
  # MIN = 6
  MIN_PLAYER_TO_START: 1
  SPAWN_WORLD: 'world'
+ ROLE_DETECTIVE: '&9Detective'
+ ROLE_SABOTEUR: '&cSaboteur'
+ ROLE_INNOCENT: '&aInnocent'
 messages:
  JOIN_MESSAGE: '&2Welcome to Sabotage!'
  FORCE_START: '&3The game has been forced to start'
@@ -17,10 +20,12 @@ messages:
  GAME_INTRO_TEAM_INNOCENT: '&aYou are a &n&lInnocent&r &ain this game.'
  GAME_INTRO_TEAM_DETECTIVE: '&9You are a &n&lDetective&r &9in this game.'
  GAME_INTRO_TEAM_SABOTEUR: '&cYou are a &n&lSaboteur&r &cin this game.'
-  PLAYER_LEAVEORDIE: '&bA player just got murdered... &3? players remaining.'
+ PLAYER_LEAVEORDIE: '&bA player just got murdered... &3? players remaining.'
+ INGAME_ACTIONBAR: '&9Sabotage - &6Role: $role$ &6Players Alive: &a$alive$'
+ LOAD_MAP: '&6The map will be $mapname$!'
 chest_itens:
  # 'amount:name' example: '1:WOODEN_SWORD'
  - '1:STONE'
  - '2:DIRT'
 maps:
- - 'world'
+ - 'your-map-here'
