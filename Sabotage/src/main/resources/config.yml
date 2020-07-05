@@ -17,6 +17,7 @@ messages:
  GAME_INTRO_TEAM_INNOCENT: '&aYou are a &n&lInnocent&r &ain this game.'
  GAME_INTRO_TEAM_DETECTIVE: '&9You are a &n&lDetective&r &9in this game.'
  GAME_INTRO_TEAM_SABOTEUR: '&cYou are a &n&lSaboteur&r &cin this game.'
+  PLAYER_LEAVEORDIE: '&bA player just got murdered... &3? players remaining.'
 chest_itens:
  # 'amount:name' example: '1:WOODEN_SWORD'
  - '1:STONE'

@@ -2,11 +2,14 @@ package com.gmail.jrhluckow.sabotage.game;
 
 import com.gmail.jrhluckow.sabotage.Sabotage;
 import com.gmail.jrhluckow.sabotage.lang.TranslatableContent;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -94,7 +97,11 @@ public class GameStatus {
 
         }else{
           Bukkit.getOnlinePlayers().forEach(player -> {
-            player.sendTitle(TranslatableContent.translateContent("messages.TITLE_STARTING").replace("?", ""+secondsToStart), TranslatableContent.translateContent("messages.SUBTITLE_STARTING").replace("?", "" + secondsToStart), 10, 10, 10 );
+            /**
+             * @author Plugner
+             * @see com.gmail.jrhluckow.sabotage.listener.PluginEventHandler
+             */
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(TranslatableContent.translateContent("messages.TITLE_STARTING").replace("?", ""+secondsToStart) + " - " + TranslatableContent.translateContent("messages.SUBTITLE_STARTING").replace("?", "" + secondsToStart)));
           });
           secondsToStart = secondsToStart - 1;
         }

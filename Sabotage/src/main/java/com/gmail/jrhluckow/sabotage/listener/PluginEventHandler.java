@@ -45,6 +45,7 @@ public class PluginEventHandler implements Listener {
           GameStatus.alivePlayers.remove(p);
           p.sendMessage(TranslatableContent.translateContent("messages.PLAYER_DIE"));
           p.setGameMode(GameMode.SPECTATOR);
+          event.setDeathMessage(TranslatableContent.translateContent("PLAYER_LEAVEORDIE"));
           if(GameStatus.alivePlayers.size() <= 1 ) {
 
               Bukkit.getOnlinePlayers().forEach(player -> {p.setGameMode(GameMode.SURVIVAL);player.teleport(new Location(Bukkit.getWorld(Objects.requireNonNull(GameStatus.config.getString("config.SPAWN_WORLD"))),0,0,0));});
@@ -61,14 +62,18 @@ public class PluginEventHandler implements Listener {
         if(GameStatus.isRunning()) {
             if(GameStatus.alivePlayers.contains(p)) {
                 GameStatus.alivePlayers.remove(p);
+                e.setQuitMessage(TranslatableContent.translateContent("PLAYER_LEAVEORDIE"));
                 if(GameStatus.alivePlayers.size() <= 1) {
                     Bukkit.getOnlinePlayers().forEach(player -> {p.setGameMode(GameMode.SURVIVAL);player.teleport(new Location(Bukkit.getWorld(Objects.requireNonNull(GameStatus.config.getString("config.SPAWN_WORLD"))),0,0,0));});
+
                     if(Team.DETECTIVES.contains(GameStatus.alivePlayers.get(0)) || Team.INNOCENTS.contains(GameStatus.alivePlayers.get(0))) {
 
                     }else if(Team.SABOTEURS.contains(GameStatus.alivePlayers.get(0))) {
 
                     }
                     GameStatus.endGame();
+                }else{
+
                 }
                 }
                 }
