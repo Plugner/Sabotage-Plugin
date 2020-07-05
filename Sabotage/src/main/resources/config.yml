@@ -8,6 +8,7 @@ config:
  ROLE_DETECTIVE: '&9Detective'
  ROLE_SABOTEUR: '&cSaboteur'
  ROLE_INNOCENT: '&aInnocent'
+ ROLE_SUSPECT: '&eSuspect'
 messages:
  JOIN_MESSAGE: '&2Welcome to Sabotage!'
  FORCE_START: '&3The game has been forced to start'

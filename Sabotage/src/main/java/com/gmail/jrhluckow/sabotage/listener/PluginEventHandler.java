@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -78,5 +79,33 @@ public class PluginEventHandler implements Listener {
                 }
                 }
     }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+        e.setCancelled(true);
+        Player p = e.getPlayer();
+        Bukkit.getOnlinePlayers().forEach(on -> {
+            if(GameStatus.isRunning()) {
+                if(GameStatus.alivePlayers.contains(p)) {
+                    String prefix = "";
+                    if(Team.INNOCENTS.contains(p)) {prefix = TranslatableContent.translateContent("config.ROLE_INNOCENT");}
+                    if(Team.DETECTIVES.contains(p)) {prefix = TranslatableContent.translateContent("config.ROLE_DETECTIVE");}
+                    if(Team.SABOTEURS.contains(p)) {prefix = TranslatableContent.translateContent("config.ROLE_SABOTEUR");}
+                    if(!Team.SABOTEURS.contains(on)) {
+                        prefix = TranslatableContent.translateContent("config.ROLE_SUSPECT");
+                    }
+                    prefix = prefix + " ";
+                    on.sendMessage(prefix + "&6: &7" + e.getMessage());
+                }else{
+                    if(!GameStatus.alivePlayers.contains(on)) {
+                        on.sendMessage("&8Dead &7" + p.getName() + "&6: &7" + e.getMessage());
+                    }
+                }
+            }else{
+                e.setFormat(e.getPlayer() + ": " + e.getMessage());
+            }
+        });
+    }
+
 
 }
